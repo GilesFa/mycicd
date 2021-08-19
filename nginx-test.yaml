@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment #部署方式
+metadata: #Pod屬性描述
+  name: nginx-demo #Pod的名稱不可空白
+  namespace: default #Pod預設的namespace，可以不輸入
+  labels: #替Pod建立標籤(選擇性，可用來指定佈署到特定node)
+    app: nginx-labels #此Pod的標籤
+spec: #Pod規格描述
+  replicas: 1 #此Pod運行時的副本數
+  selector: #設定要與template mapping的方法
+    matchLabels: #採取以lables對應的方式
+      app: nginx-app #鍵與值必須與template lables對應
+  template: #模板:包含有容器的描述
+    metadata: #template的屬性描述
+      labels:
+        app: nginx-app #鍵與值必須與selector的lables對應
+    spec: #容器規格描述
+      containers:
+        - image: gilesfa/mytools:v1
+          name: client #呈現在CRI上的名稱
+          command: ["/bin/sh"] #容器被運行時要執行的指令
+          args: ["-c", "sleep 3600000"] #指令後面的參數
+        - image: nginx:stable
+          name: nginx #呈現在CRI上的名稱
+          ports:
+            - containerPort: 80
