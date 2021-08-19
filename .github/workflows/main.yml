@@ -19,9 +19,7 @@ jobs:
       - name: Run shell check
         run: |
           shellcheck start.sh
-          popd
 
       - name: Run yaml check
         run: |
           yamllint nginx-test.yaml
-          popd
