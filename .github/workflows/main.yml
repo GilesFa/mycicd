@@ -23,3 +23,7 @@ jobs:
       - name: Run yaml check
         run: |
           yamllint nginx-test.yaml
+      
+      - name: Run echo
+        run: |
+          echo "cicd ok ~~~~"
